@@ -7,6 +7,7 @@ public class User {
     private String secondName;
     private String patronymic;
     private LocalDate dateOfBirth;
+    protected Long id;
 
     public User(String firstName, String secondName, String patronymic, LocalDate dateOfBirth) {
         this.firstName = firstName;
@@ -55,6 +56,10 @@ public class User {
                ", patronymic='" + patronymic + '\'' +
                ", dateOfBirth=" + dateOfBirth +
                '}';
+    }
+
+    public Long getId() {
+        return id;
     }
 
     @Override

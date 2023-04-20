@@ -19,16 +19,28 @@ public class StudentService implements UserService<Student> {
         return students;
     }
 
+
+
     @Override
     public void create(String firstName, String secondName, String patronymic, LocalDate dateOfBirth) {
-        Long countMaxId = 0L;
-        for (Student student: students){
-                if (student.getStudentId() > countMaxId){
-                    countMaxId = student.getStudentId();
-            }
-        }
+////        Long countMaxId = 0L;
+////        for (Student student: students){
+////                if (student.getStudentId() > countMaxId){
+////                    countMaxId = student.getStudentId();
+////            }
+////        }
+        Long countMaxId = getMaxId();
         countMaxId++;
         Student student = new Student(firstName, secondName, patronymic, dateOfBirth, countMaxId);
         students.add(student);
+    }
+
+    @Override
+    public Long getId(Student student) {
+        return student.getStudentId();
+    }
+    @Override
+    public Long getMaxId() {
+        return getMaxId(students);
     }
 }

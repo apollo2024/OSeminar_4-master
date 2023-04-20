@@ -8,28 +8,45 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TeacherService implements UserService<Teacher> {
-    private final List<Teacher> teachers;
+public class TeacherService<T extends Teacher> implements UserService<T> {
+    private final List<T> teachers;
 
-    public TeacherService(List<Teacher> teachers) {
-        this.teachers = new ArrayList<Teacher>();
+    public TeacherService(List<T> teachers) {
+        this.teachers = new ArrayList<T>();
     }
 
     @Override
-    public List<Teacher> getAll() {
+    public List<T> getAll() {
         return teachers;
     }
 
     @Override
     public void create(String firstName, String secondName, String patronymic, LocalDate dateOfBirth) {
         Long countMaxId = 0L;
-        for (Teacher teacher: teachers){
-            if (teacher.getTeacherId() > countMaxId){
+        for (Teacher teacher : teachers) {
+            if (teacher.getTeacherId() > countMaxId) {
                 countMaxId = teacher.getTeacherId();
             }
         }
-        countMaxId++;
-        Teacher teacher1 = new Teacher(firstName, secondName, patronymic, dateOfBirth, countMaxId);
-        teachers.add(teacher1);
+        Teacher teacher = new Teacher(firstName, secondName, patronymic, dateOfBirth, countMaxId);
+        teachers.add((T) teacher);
+    }
+
+    @Override
+    public Long getId(Teacher teacher) {
+        return teacher.getTeacherId();
+    }
+
+    @Override
+    public Long getMaxId() {
+        return getMaxId(teachers);
+    }
+
+
+    @Override
+    public String toString() {
+        return "TeacherService{" +
+                "teachers=" + teachers +
+                '}';
     }
 }
